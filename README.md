@@ -3,6 +3,7 @@
 > **B.Tech Capstone & Internship Project (Phase I)**  
 > **Student:** Aman Pandey (Computer Science and Design, RR Institute of Modern Technology)  
 > **Industry Mentorship:** Mr. Hitesh Kumawat, IBM India Pvt. Ltd.  
+> **Live Production Platform:** [https://routepulse-soc.onrender.com](https://routepulse-soc.onrender.com)  
 > **Prototype Origin:** [NetCalc Pro Prototype](https://net-calculator.lovable.app)
 
 ---
