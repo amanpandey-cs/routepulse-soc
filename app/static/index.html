@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoutePulse SOC — Real-Time Network Traffic Monitoring & IP Threat Assessment</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Header Navigation Bar -->
+  <header class="top-header">
+    <div class="brand-section">
+      <div class="brand-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="brand-title">
+          RoutePulse <span style="color: var(--primary-cyan);">SOC</span>
+          <span class="version-badge">v5.0.87-SOC</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim);">Network Traffic Monitoring & IP Threat Assessment Platform</div>
+      </div>
+    </div>
+
+    <div class="header-status-strip">
+      <div class="status-pill">
+        <span class="pulse-dot"></span>
+        <span>INGESTION: LIVE</span>
+      </div>
+      <div class="status-pill">
+        <span style="color: var(--primary-cyan);">21 ML MODELS</span>
+      </div>
+      <div class="status-pill">
+        <span style="color: var(--accent-amber);">FEEDS: 30/30 OK</span>
+      </div>
+      <div class="status-pill">
+        <span>SOAR ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" data-tab="tab-overview">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+      SOC Live Monitor
+    </button>
+    <button class="tab-btn" data-tab="tab-intelligence">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      IP Threat Intelligence
+    </button>
+    <button class="tab-btn" data-tab="tab-subnet">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+      NetCalc Pro Subnet Tool
+    </button>
+    <button class="tab-btn" data-tab="tab-alerts">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      Detection & Alerts
+      <span class="tab-badge" id="alertsTabBadge">0</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-firewall">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Perimeter Firewall
+    </button>
+    <button class="tab-btn" data-tab="tab-ingest">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      Log Ingestion (L1/L2)
+    </button>
+    <button class="tab-btn" data-tab="tab-simulator">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      Attack Simulator
+    </button>
+    <button class="tab-btn" data-tab="tab-reports">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      Audit & Reports
+    </button>
+  </nav>
+
+  <main class="main-wrapper">
+
+    <!-- ========================================================
+         TAB 1: SOC LIVE MONITOR & OVERVIEW (Slide 4 Replica)
+         ======================================================== -->
+    <section id="tab-overview" class="tab-content active">
+      
+      <!-- Unified Threat Intelligence Hero Banner -->
+      <div class="threat-hero-banner">
+        <div class="hero-left">
+          <h2>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Unified Threat Intelligence
+          </h2>
+          <div class="hero-tags">
+            <span class="hero-tag green">● Active Protection</span>
+            <span class="hero-tag amber">Provenance Bayesian (v4.29)</span>
+            <span class="hero-tag">4-Stage Pipeline</span>
+            <span class="hero-tag">21 ML Models</span>
+            <span class="hero-tag">Kill Chain Guard</span>
+            <span class="hero-tag">SOAR Automated</span>
+            <span class="hero-tag">JA3/TLS Inspection</span>
+          </div>
+        </div>
+
+        <div class="threat-gauge-box">
+          <div class="gauge-label">Perimeter Threat Status</div>
+          <div class="gauge-val" id="heroGaugeVal">ELEVATED</div>
+          <div class="gauge-track">
+            <div class="gauge-fill" id="heroGaugeFill" style="width: 65%;"></div>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 0.4rem;">SAFE &rarr; LOW &rarr; ELEVATED &rarr; CRIT</div>
+        </div>
+      </div>
+
+      <!-- KPI Stat Tiles Grid (Slide 4 Exact Metrics) -->
+      <div class="kpi-grid">
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Total Scans <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+          <div class="kpi-value" id="kpiTotalScans">59</div>
+          <div class="kpi-footer">Active Ingestion Buffer</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Events (24H) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
+          <div class="kpi-value" id="kpiEvents24h">440.2K</div>
+          <div class="kpi-footer">Ingested Log Packets</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Threat IPs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+          <div class="kpi-value" id="kpiThreatIPs" style="color: #ef4444;">28.1K</div>
+          <div class="kpi-footer">Under Active Triage</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Feed Matches <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></div>
+          <div class="kpi-value" id="kpiFeedMatches">108.7K</div>
+          <div class="kpi-footer">Threat Feeds Correlated</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Loaded Indicators</div>
+          <div class="kpi-value" id="kpiLoadedIndicators">356,683</div>
+          <div class="kpi-footer">Blacklists & Tor Relays</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Feeds OK</div>
+          <div class="kpi-value" id="kpiFeedsOk" style="color: #10b981;">30/30</div>
+          <div class="kpi-footer">100% Upstream Health</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Tuning Rules</div>
+          <div class="kpi-value" id="kpiTuningRules">197</div>
+          <div class="kpi-footer">Active Heuristic Policies</div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-title">Blocked Hosts</div>
+          <div class="kpi-value" id="kpiBlockedHosts" style="color: #ef4444;">0</div>
+          <div class="kpi-footer">Perimeter Firewalls Active</div>
+        </div>
+      </div>
+
+      <!-- Live Event Timeline Canvas Graph (Slide 4 Event Timeline Curve) -->
+      <div class="cyber-card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              Event Timeline (24h) Live Stream
+            </div>
+            <div class="card-subtitle">Real-time telemetry trend analysis &bull; Red: Critical Threat Curve &bull; Amber: Warning Events</div>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <button class="btn btn-secondary btn-sm" id="toggleStreamBtn">Pause Traffic Stream</button>
+            <button class="btn btn-primary btn-sm" onclick="switchTab('tab-simulator')">Simulate Attacks</button>
+          </div>
+        </div>
+        <canvas id="threatTimelineCanvas"></canvas>
+      </div>
+
+      <!-- Real-Time Inbound Network Traffic Feed Table -->
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              Real-Time Inbound Traffic Telemetry (Layer 1 & 2 Normalization)
+            </div>
+            <div class="card-subtitle">Proactively monitoring external IP connection requests, ports, and HTTP methods</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="pollEvents()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l6 6"/></svg>
+            Refresh Feed
+          </button>
+        </div>
+
+        <div class="data-table-container">
+          <table class="cyber-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Source IP</th>
+                <th>Port</th>
+                <th>Proto</th>
+                <th>Request Target</th>
+                <th>Status</th>
+                <th>Bytes</th>
+                <th>Action</th>
+                <th>SOC Triage</th>
+              </tr>
+            </thead>
+            <tbody id="liveTrafficTbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         TAB 2: IP THREAT ASSESSMENT & INTELLIGENCE (Slide 6 Replica)
+         ======================================================== -->
+    <section id="tab-intelligence" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Core Analytical Capability: IP Address Intelligence & Risk Factors
+            </div>
+            <div class="card-subtitle">Evaluates IP reputation, proxy/Tor status, ASN ownership, and calculates 0-100 risk score</div>
+          </div>
+        </div>
+
+        <form id="ipLookupForm" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <input type="text" id="targetIpInput" class="cyber-input" placeholder="Enter IPv4 or IPv6 (e.g. 198.51.100.42)" value="198.51.100.42" style="flex: 1; min-width: 280px;" required>
+          <button type="submit" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            Assess IP Threat
+          </button>
+        </form>
+
+        <div style="margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Slide Quick Tests:</span>
+          <button class="btn btn-secondary btn-sm" onclick="quickAssessIP('198.51.100.42')">198.51.100.42 (Slide 6 Sample)</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAssessIP('185.220.101.5')">185.220.101.5 (Tor Exit Relay)</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAssessIP('45.155.205.233')">45.155.205.233 (Brute Force Scanner)</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAssessIP('8.8.8.8')">8.8.8.8 (Google Anycast DNS)</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAssessIP('192.168.1.1')">192.168.1.1 (RFC 1918 Private)</button>
+        </div>
+
+        <!-- Rendered Threat Profile Card -->
+        <div id="threatProfileCard" style="display: none;"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: NETCALC PRO SUBNET CALCULATOR (Slide 7 & Prototype Link)
+         ======================================================== -->
+    <section id="tab-subnet" class="tab-content">
+      <div class="cyber-card" style="margin-bottom: 1.5rem; border-color: rgba(56, 189, 248, 0.4);">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.85rem; border-radius: 20px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); font-size: 0.8rem; color: #38bdf8; font-weight: 600; margin-bottom: 0.5rem;">
+            <span class="pulse-dot"></span> Browser-Based IPv4 Subnet Calculator
+          </div>
+          <h2 style="font-size: 2.2rem; font-weight: 800; color: #fff;">NetCalc Pro</h2>
+          <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 0.95rem;">
+            Professional subnet calculator for network engineers and SOC analysts. Instant client-side IP validity and subnet calculation matching the capstone prototype.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 1.5rem; border: 1px solid var(--border-color);">
+          
+          <div class="form-group">
+            <label class="form-label" for="subnetIpInput">IPv4 Address</label>
+            <input type="text" id="subnetIpInput" class="cyber-input" value="192.168.1.1" placeholder="e.g. 192.168.1.1">
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label class="form-label" style="margin-bottom: 0;">CIDR Prefix</label>
+              <span class="cidr-display-box" id="cidrDisplay">/24</span>
+            </div>
+            <div class="cidr-slider-wrap">
+              <input type="range" id="cidrSlider" class="cidr-slider" min="0" max="32" value="24">
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-dim); margin-top: 0.35rem; font-family: var(--font-mono);">
+              <span>/0 (Internet)</span>
+              <span>/32 (Single Host)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Binary Representation Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <div class="binary-box">
+            <div class="subnet-metric-label">Binary Subnet Mask</div>
+            <div class="binary-text" id="binarySubnetMask">11111111.11111111.11111111.00000000</div>
+          </div>
+          <div class="binary-box">
+            <div class="subnet-metric-label">Binary Network Address</div>
+            <div class="binary-text" id="binaryNetworkAddress">11000000.10101000.00000001.00000000</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculation Results Grid (9 Cards Matching NetCalc Pro) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff;">Calculation Results</h3>
+        <button class="btn btn-secondary btn-sm" id="copyAllSubnetBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          Copy All Results
+        </button>
+      </div>
+
+      <div class="subnet-cards-grid" id="subnetResultsContainer">
+        <!-- Dynamically rendered by subnet.js -->
+      </div>
+
+      <!-- Advanced CIDR Membership Verification (Slide 7 & 8) -->
+      <div class="cyber-card" style="margin-top: 1.5rem; background: rgba(0,0,0,0.35); border: 1px solid var(--border-color);">
+        <div class="card-header" style="margin-bottom: 0.75rem;">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Subnet Scope & IP Membership Verification
+          </div>
+          <div class="card-subtitle">Verify whether an arbitrary candidate IP resides inside a target CIDR block</div>
+        </div>
+
+        <form id="membershipForm" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <input type="text" id="memberCandidateIp" class="cyber-input" placeholder="Candidate IP (e.g. 192.168.1.105)" value="192.168.1.105" style="flex: 1; min-width: 220px;" required>
+          <input type="text" id="memberTargetCidr" class="cyber-input" placeholder="Target CIDR (e.g. 192.168.1.0/24)" value="192.168.1.0/24" style="flex: 1; min-width: 220px;" required>
+          <button type="submit" class="btn btn-primary btn-sm">Verify Membership</button>
+        </form>
+
+        <div id="membershipResultBox" style="margin-top: 0.85rem; font-size: 0.85rem; font-family: var(--font-mono); display: none;"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: INCIDENTS & THREAT ALERTS (Slide 9 Threat Scenarios)
+         ======================================================== -->
+    <section id="tab-alerts" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Practical Threat Scenarios & Investigation Alerts (Layer 4 Detection)
+            </div>
+            <div class="card-subtitle">Automated Brute-Force Attacks &bull; Port Scanning Probes &bull; Malicious Scraper Detection</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="switchTab('tab-simulator')">Inject Test Attack Wave</button>
+        </div>
+
+        <div class="data-table-container">
+          <table class="cyber-table">
+            <thead>
+              <tr>
+                <th>Alert ID</th>
+                <th>Severity</th>
+                <th>Detection Rule</th>
+                <th>Offending IP</th>
+                <th>Investigation Details & Recommendation</th>
+                <th>Timestamp</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="alertsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 5: PERIMETER FIREWALL & BLOCKLIST (Slide 11 Governance)
+         ======================================================== -->
+    <section id="tab-firewall" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              Perimeter Firewall & Containment Blocklist
+            </div>
+            <div class="card-subtitle">Enforcing Human-in-the-Loop high-impact security blocks to safeguard operational integrity</div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="promptBlockIP('')">+ Manually Drop IP</button>
+        </div>
+
+        <div class="data-table-container">
+          <table class="cyber-table">
+            <thead>
+              <tr>
+                <th>Blocked IP Address</th>
+                <th>Reason / Trigger Policy</th>
+                <th>Enforcement Action</th>
+                <th>Containment Time</th>
+                <th>Remediation</th>
+              </tr>
+            </thead>
+            <tbody id="blockedTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 6: LOG INGESTION (Layer 1 & Layer 2 Normalization)
+         ======================================================== -->
+    <section id="tab-ingest" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              Target Modular Architecture: Layer 1 Collection & Layer 2 Normalization
+            </div>
+            <div class="card-subtitle">Upload web server access logs, firewall syslog events, or paste raw HTTP headers for parsing</div>
+          </div>
+        </div>
+
+        <form id="logUploadForm">
+          <div class="form-group">
+            <label class="form-label">Upload Log File (.log, .txt, .csv)</label>
+            <input type="file" id="logFileInput" class="cyber-input" accept=".log,.txt,.csv">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Or Paste Raw Combined Log Format</label>
+            <textarea id="rawLogTextInput" class="cyber-input" rows="6" placeholder='198.51.100.42 - - [15/Oct/2026:10:14:20 +0000] "GET /.env HTTP/1.1" 404 162 "-" "sqlmap/1.7.2#stable"'></textarea>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+              Normalize & Ingest Logs
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="loadSampleLogText()">Load Capstone Sample Logs</button>
+          </div>
+
+          <div id="uploadStatusBox" style="margin-top: 1rem; font-size: 0.85rem; font-family: var(--font-mono);"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 7: ATTACK SCENARIO SIMULATOR (Slide 9 Practical Applications)
+         ======================================================== -->
+    <section id="tab-simulator" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Target Threat Scenarios & Anomaly Generator
+            </div>
+            <div class="card-subtitle">Inject controlled adversarial telemetry to evaluate intrusion detection rules in real-time</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+          
+          <!-- Scenario 1 -->
+          <div class="cyber-card" style="background: rgba(0,0,0,0.3); border-color: rgba(239, 68, 68, 0.3);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="badge badge-crit">SCENARIO 1</span>
+              <strong style="color: #fff;">Automated Brute-Force</strong>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Injects rapid authentication failures (401/403) from rotating bot IPs targeting <code>/api/auth/login</code> and <code>/wp-login.php</code>.
+            </p>
+            <button class="btn btn-danger btn-sm" id="simBruteForceBtn" style="width: 100%;">
+              Trigger Brute-Force Attack Wave
+            </button>
+          </div>
+
+          <!-- Scenario 2 -->
+          <div class="cyber-card" style="background: rgba(0,0,0,0.3); border-color: rgba(245, 158, 11, 0.3);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="badge badge-high">SCENARIO 2</span>
+              <strong style="color: #fff;">Recon & Port Scan</strong>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Simulates automated reconnaissance probing open ports (21, 22, 23, 3306, 3389, 8080) from Tor relay <code>185.220.101.5</code>.
+            </p>
+            <button class="btn btn-secondary btn-sm" id="simPortScanBtn" style="width: 100%; border-color: var(--accent-amber); color: var(--accent-amber);">
+              Trigger Port Scan Wave
+            </button>
+          </div>
+
+          <!-- Scenario 3 -->
+          <div class="cyber-card" style="background: rgba(0,0,0,0.3); border-color: rgba(56, 189, 248, 0.3);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="badge badge-3xx">SCENARIO 3</span>
+              <strong style="color: #fff;">Bad Bot & Exploit Probe</strong>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Fires directory traversal probes targeting <code>/.env</code>, <code>/etc/passwd</code>, and sqlmap injection signatures.
+            </p>
+            <button class="btn btn-primary btn-sm" id="simBadBotBtn" style="width: 100%;">
+              Trigger Scraper Exploit Probe
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 8: AUDIT & REPORTS (Slide 13 Phase 4)
+         ======================================================== -->
+    <section id="tab-reports" class="tab-content">
+      <div class="cyber-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Executive SOC Reporting & Incident Audit Export
+            </div>
+            <div class="card-subtitle">Generate exportable compliance documentation and post-incident investigation reports</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+          <a href="/api/v1/reports/export?format=csv&export_type=alerts" class="btn btn-secondary" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Export Threat Alerts (CSV)
+          </a>
+
+          <a href="/api/v1/reports/export?format=json&export_type=alerts" class="btn btn-secondary" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Export Threat Alerts (JSON)
+          </a>
+
+          <a href="/api/v1/reports/export?format=csv&export_type=events" class="btn btn-secondary" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Export Ingested Traffic Logs (CSV)
+          </a>
+
+          <button class="btn btn-primary" onclick="window.print()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print Executive Summary (PDF)
+          </button>
+        </div>
+
+        <!-- SOAR Webhook Integration (Slide 13 Phase 4) -->
+        <div style="margin-top: 1.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+          <h4 style="font-size: 0.95rem; color: #38bdf8; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            SOAR / SIEM Webhook Integration Tester (Slack, Discord, Microsoft Teams)
+          </h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Test automated security alert dispatches. Leave blank to generate and inspect simulated payload, or enter an external webhook URL.
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <input type="url" id="webhookTestUrl" class="cyber-input" placeholder="https://hooks.slack.com/services/... (optional)" style="flex: 1; min-width: 280px;">
+            <button class="btn btn-primary btn-sm" onclick="dispatchCustomWebhook()">Dispatch Test Webhook Alert</button>
+          </div>
+          <div id="webhookResultDisplay" style="margin-top: 0.75rem; font-size: 0.8rem; font-family: var(--font-mono); color: #cbd5e1; display: none;"></div>
+        </div>
+
+        <div style="margin-top: 1.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+          <h4 style="font-size: 0.95rem; color: #fff; margin-bottom: 0.5rem;">Project Academic Attribution</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            <strong>Project Title:</strong> Security Operations Center (SOC) Real-Time Network Traffic Monitoring & IP Threat Assessment<br>
+            <strong>Author:</strong> Aman Pandey (Computer Science and Design Student, RR Institute of Modern Technology)<br>
+            <strong>Internship & Training Experience:</strong> Under Guidance of Mr. Hitesh Kumawat, IBM India Pvt. Ltd.<br>
+            <strong>Live Prototype Verification:</strong> NetCalc Pro Subnet & CIDR Range Evaluation Module (https://net-calculator.lovable.app)
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="soc-footer">
+    <div><strong>RoutePulse SOC v5.0.87</strong> &bull; Capstone Project Phase I & Internship &bull; IBM India Mentorship</div>
+    <div style="margin-top: 0.35rem; color: var(--text-dim);">Built with Python FastAPI, Real-Time Heuristic Rules Engine & NetCalc Pro CIDR Subnet Calculator</div>
+  </footer>
+
+  <script>
+    function loadSampleLogText() {
+      const sample = `198.51.100.42 - - [15/Oct/2026:10:14:20 +0000] "GET /.env HTTP/1.1" 404 162 "-" "sqlmap/1.7.2#stable"
+198.51.100.42 - - [15/Oct/2026:10:14:21 +0000] "GET /wp-config.php.bak HTTP/1.1" 404 162 "-" "Nikto/2.1.6"
+198.51.100.42 - - [15/Oct/2026:10:14:22 +0000] "GET /etc/passwd HTTP/1.1" 404 162 "-" "curl/7.88.1"
+45.155.205.233 - - [15/Oct/2026:10:14:30 +0000] "POST /api/auth/login HTTP/1.1" 401 54 "https://example.com/login" "Mozilla/5.0"
+45.155.205.233 - - [15/Oct/2026:10:14:32 +0000] "POST /api/auth/login HTTP/1.1" 401 54 "https://example.com/login" "Mozilla/5.0"
+45.155.205.233 - - [15/Oct/2026:10:14:33 +0000] "POST /api/auth/login HTTP/1.1" 401 54 "https://example.com/login" "Mozilla/5.0"
+45.155.205.233 - - [15/Oct/2026:10:14:35 +0000] "POST /api/auth/login HTTP/1.1" 401 54 "https://example.com/login" "Mozilla/5.0"
+185.220.101.5 - - [15/Oct/2026:10:14:50 +0000] "GET / HTTP/1.1" 404 120 "-" "masscan/1.3.2"
+185.220.101.5 - - [15/Oct/2026:10:14:51 +0000] "GET / HTTP/1.1" 404 120 "-" "masscan/1.3.2"`;
+      const textarea = document.getElementById('rawLogTextInput');
+      if (textarea) textarea.value = sample;
+    }
+  </script>
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/subnet.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
