@@ -1,10 +1,14 @@
 import time
 import random
 import re
+from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional
 from collections import deque
 from app.core.detection import detection_engine
 from app.core.ip_engine import ip_threat_engine
+
+# Indian Standard Time (UTC+5:30)
+IST = timezone(timedelta(hours=5, minutes=30))
 
 # Common web user agents
 USER_AGENTS = [
@@ -116,7 +120,7 @@ class TrafficStreamManager:
         event = {
             "id": f"EVT-{int(now * 1000) % 10000000}",
             "timestamp": now,
-            "time_str": time.strftime("%H:%M:%S", time.localtime(now)),
+            "time_str": datetime.fromtimestamp(now, IST).strftime("%H:%M:%S IST"),
             "src_ip": src_ip,
             "dst_ip": "172.31.24.10",
             "dst_port": dst_port,
@@ -186,7 +190,7 @@ class TrafficStreamManager:
                 event = {
                     "id": f"LOG-{int(time.time()*1000)%10000000}",
                     "timestamp": time.time(),
-                    "time_str": time.strftime("%H:%M:%S"),
+                    "time_str": datetime.now(IST).strftime("%H:%M:%S IST"),
                     "src_ip": src_ip,
                     "dst_ip": "172.31.24.10",
                     "dst_port": 80 if "http:" in path.lower() else 443,

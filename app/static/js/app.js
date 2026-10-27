@@ -6,6 +6,7 @@ let liveStreamTimer = null;
 let isStreamPaused = false;
 
 document.addEventListener('DOMContentLoaded', () => {
+  initIstClock();
   initTabs();
   initSubnetCalc();
   initTimelineChart();
@@ -156,7 +157,7 @@ function appendEventRow(evt, prepend = true) {
   else if (sc >= 300) badgeClass = 'badge-3xx';
 
   tr.innerHTML = `
-    <td>${evt.time_str}</td>
+    <td>${formatToIst(evt.timestamp || evt.time_str)}</td>
     <td>
       <a href="javascript:void(0)" onclick="quickAssessIP('${evt.src_ip}')" style="color: #38bdf8; text-decoration: none; font-weight: 700;">
         ${evt.src_ip}
@@ -226,7 +227,7 @@ function renderAlertsTable(alerts) {
         ${a.details}
         <div style="font-size: 0.72rem; color: #f59e0b; margin-top: 0.2rem;">Rec: ${a.recommended_action}</div>
       </td>
-      <td>${a.timestamp}</td>
+      <td>${formatDateTimeToIst(a.timestamp)}</td>
       <td style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
         <button class="btn btn-primary btn-sm" onclick="openIncidentWorkbench('${a.id}')">Investigate</button>
         <button class="btn btn-danger btn-sm" onclick="blockIPFromAlert('${a.src_ip}', '${a.rule_name}')">Block</button>
@@ -360,7 +361,7 @@ function renderBlockedTable(list) {
       <td style="font-family: var(--font-mono); font-weight: 700; color: #ef4444;">${b.ip}</td>
       <td style="color: #cbd5e1;">${b.reason}</td>
       <td><span class="badge badge-crit">${b.action}</span></td>
-      <td>${b.blocked_at}</td>
+      <td>${formatDateTimeToIst(b.blocked_at)}</td>
       <td>
         <button class="btn btn-secondary btn-sm" onclick="unblockIP('${b.ip}')">Unblock / Restore</button>
       </td>
@@ -732,6 +733,42 @@ async function dispatchCustomWebhook() {
   } catch (err) {
     if (resDisplay) resDisplay.innerHTML = `<span style="color: #ef4444;">Failed to dispatch: ${err}</span>`;
   }
+}
+
+// -------------------------------------------------------------
+// Indian Standard Time (IST) Helpers
+// -------------------------------------------------------------
+function initIstClock() {
+  function updateClock() {
+    const now = new Date();
+    const istString = now.toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    const clockEl = document.getElementById('liveIstClock');
+    if (clockEl) clockEl.textContent = `${istString} IST`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+function formatToIst(ts) {
+  if (!ts) return new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false }) + ' IST';
+  if (typeof ts === 'string' && ts.includes('IST')) return ts;
+  const d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+  if (isNaN(d.getTime())) return ts;
+  return d.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false }) + ' IST';
+}
+
+function formatDateTimeToIst(ts) {
+  if (!ts) return new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST';
+  if (typeof ts === 'string' && ts.includes('IST')) return ts;
+  const d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+  if (isNaN(d.getTime())) return ts;
+  return d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST';
 }
 
 // -------------------------------------------------------------

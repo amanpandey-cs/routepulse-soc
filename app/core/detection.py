@@ -1,6 +1,10 @@
 import time
+from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional
 from collections import defaultdict, deque
+
+# Indian Standard Time (UTC+5:30)
+IST = timezone(timedelta(hours=5, minutes=30))
 
 class AnomalyDetectionEngine:
     def __init__(self):
@@ -130,7 +134,7 @@ class AnomalyDetectionEngine:
             "src_ip": src_ip,
             "category": category,
             "details": details,
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S IST"),
             "status": "ACTIVE_INVESTIGATION",
             "recommended_action": recommended_action
         }
@@ -145,7 +149,7 @@ class AnomalyDetectionEngine:
             "ip": ip_str,
             "reason": reason,
             "analyst": analyst,
-            "blocked_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "blocked_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S IST"),
             "action": "DROP_ALL_INBOUND"
         }
         self.blocked_ips[ip_str] = entry
